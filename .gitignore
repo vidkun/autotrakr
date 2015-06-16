@@ -15,3 +15,6 @@
 .DS_Store
 *.gem
 *.swp
+
+# Ignore application configuration
+/config/application.yml
