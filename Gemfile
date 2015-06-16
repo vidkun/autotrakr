@@ -11,6 +11,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'unicorn'
 gem 'mongoid', '~> 4.0.0'
 gem 'bcrypt', '~> 3.1.7'
+gem 'haml'
+gem 'figaro'
+
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -26,3 +29,7 @@ group :development, :test do
   gem 'spring'
 end
 
+group :test do
+  gem 'rspec-rails'
+  gem 'database_cleaner'
+end
