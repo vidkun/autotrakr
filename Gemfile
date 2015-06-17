@@ -32,7 +32,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'mongoid-rspec', '~> 2.1.0'
   gem 'database_cleaner'
-  gem 'ffaker'
+  gem 'faker'
 end
 
 group :test do

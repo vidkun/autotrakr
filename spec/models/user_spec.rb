@@ -16,36 +16,24 @@ describe User do
                                                        .with_message('is already taken') }
 
   it 'fails because no passwrod' do
-    expect( User.new( { username: 'bill' } ).save ).to be false
+    expect(build(:user, password: nil)).to_not be_valid
+    expect(build(:user, password: nil).save ).to be false
   end
  
   #it { is_expected.to validate_length_of(:password).with_minimum(8) }
   it 'fails because passwrod to short' do
-    expect( User.new( { username: 'bill',
-                        email: 'bill@wyldstallyns.com',
-                        password: 'ted',
-                        password_confirmation: 'ted' } ).save ).to be false
+    expect(build(:user, :short_password)).to_not be_valid
+    expect(build(:user, :short_password).save).to be false
   end
  
   it 'succeeds because password is long enough' do
-    expect( User.new( { username: 'bill',
-                        email: 'bill@wyldstallyns.com',
-                        password: 'wyldstallyns',
-                        password_confirmation: 'wyldstallyns' } ).save ).to be true
+    expect(build(:user, :valid_password)).to be_valid
+    expect(build(:user, :valid_password).save).to be true
   end
  
   it 'fails because password confirmation does not match' do
-    expect( User.new( { username: 'bill',
-                        email: 'bill@wyldstallyns.com',
-                        password: 'wyldstallyns',
-                        password_confirmation: 'abc123' } ).save ).to be false
-  end
- 
-  it 'succeeds because password & confirmation match' do
-    expect( User.new( { username: 'bill',
-                        email: 'bill@wyldstallyns.com',
-                        password: 'wyldstallyns',
-                        password_confirmation: 'wyldstallyns' } ).save ).to be true
+    expect( build(:user, :mismatch_password)).to_not be_valid
+    expect( build(:user, :mismatch_password).save ).to be false
   end
 
 end
