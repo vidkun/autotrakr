@@ -13,7 +13,7 @@ gem 'mongoid', '~> 4.0.0'
 gem 'bcrypt', '~> 3.1.7'
 gem 'haml'
 gem 'figaro'
-
+gem 'high_voltage'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
