@@ -18,4 +18,10 @@ class User
                           :email,
                           case_sensitive: false,
                           message: 'is already taken'
+
+  before_save :downcase_email
+
+  def downcase_email
+    self.email = email.downcase
+  end
 end
