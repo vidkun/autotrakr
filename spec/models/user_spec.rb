@@ -36,4 +36,11 @@ describe User do
     expect( build(:user, :mismatch_password).save ).to be false
   end
 
+  it 'downcases an email before saving' do
+    user = build(:user, :valid_password)
+    user.email.upcase!
+    expect( user.save ).to be true
+    expect(user.email ).to eq( user.email.downcase )
+  end
+
 end
