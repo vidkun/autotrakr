@@ -11,7 +11,7 @@ class UsersController < ApplicationController
 
     if @user.save
       redirect_to users_url,
-                  notice: "User #{@user.name} was successfully created."
+                  notice: "User #{@user.username} was successfully created."
     else
       render :new
     end
@@ -23,7 +23,7 @@ class UsersController < ApplicationController
   def update
     if @user.update(user_params)
       redirect_to users_url,
-                  notice: "User #{@user.name} was successfully updated."
+                  notice: "User #{@user.username} was successfully updated."
     else
       render :edit
     end
@@ -36,7 +36,7 @@ class UsersController < ApplicationController
     # Not sure I'm gonna keep this action. Do users need to be deleted?
     begin
       @user.destroy
-      flash[:notice] = "User #{user.name} deleted!"
+      flash[:notice] = "User #{user.username} deleted!"
     rescue StandardError => e
       flash[:notice] = e.message
     end
