@@ -9,5 +9,5 @@
       %a.navbar-brand{href: '#'}Autotrakr
 
     .navbar-right
-      %button.btn.btn-sm.navbar-btn{type: 'button'}Login 
-      %button.btn.btn-sm.navbar-btn{type: 'button'}Sign Up
+      = link_to 'Login', '#', class: 'btn btn-sm navbar-btn btn-primary'
+      = link_to 'Sign Up', users_new_path, class: 'btn btn-sm navbar-btn btn-default'
