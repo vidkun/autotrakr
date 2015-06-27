@@ -43,7 +43,7 @@ RSpec.describe SessionsController, type: :controller do
 
       it "sets the flash success message" do
         post :create, email: user.email, password: user.password
-        expect(flash[:success]).to eq("Login Successful")
+        expect(flash[:notice]).to eq("Login Successful")
       end
     end
 
@@ -55,7 +55,7 @@ RSpec.describe SessionsController, type: :controller do
 
       it "sets the flash error message" do
         post :create, email: email, password: password
-        expect(flash[:error]).to eq("Login failed. Please check your email and password.")
+        expect(flash[:alert]).to eq("Login failed. Please check your email and password.")
       end
     end
 

@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     if @user.save
       session[:user_id] = @user.id
       redirect_to user_url(@user),
-                  flash: { success: "User #{@user.username} was successfully created." }
+                  notice: "User #{@user.username} was successfully created."
     else
       render :new
     end
@@ -24,7 +24,7 @@ class UsersController < ApplicationController
   def update
     if @user.update(user_params)
       redirect_to users_url,
-                  flash: { success: "User #{@user.username} was successfully updated." }
+                  notice: "User #{@user.username} was successfully updated."
     else
       render :edit
     end
@@ -39,7 +39,7 @@ class UsersController < ApplicationController
       @user.destroy
       flash[:notice] = "User #{user.username} deleted!"
     rescue StandardError => e
-      flash[:notice] = e.message
+      flash[:alert] = e.message
     end
     redirect_to users_url
   end
