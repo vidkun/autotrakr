@@ -10,8 +10,9 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
+      session[:user_id] = @user.id
       redirect_to user_url(@user),
-                  notice: "User #{@user.username} was successfully created."
+                  flash: { success: "User #{@user.username} was successfully created." }
     else
       render :new
     end
@@ -23,7 +24,7 @@ class UsersController < ApplicationController
   def update
     if @user.update(user_params)
       redirect_to users_url,
-                  notice: "User #{@user.username} was successfully updated."
+                  flash: { success: "User #{@user.username} was successfully updated." }
     else
       render :edit
     end
@@ -46,7 +47,7 @@ class UsersController < ApplicationController
   private
 
   def set_user
-    @user = User.find(params[:id])
+    @user = User.find_by(id: params[:id])
   end
 
   def user_params
