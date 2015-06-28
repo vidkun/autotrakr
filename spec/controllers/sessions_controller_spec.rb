@@ -83,11 +83,11 @@ RSpec.describe SessionsController, type: :controller do
 
   end
 
-  # describe "DELETE #destroy" do
-  #   it "deletes the session" do
-  #     delete :destroy
-  #     expect(response).to have_http_status(:success)
-  #   end
-  # end
+  describe "DELETE #destroy" do
+    it "deletes the session" do
+      delete :destroy
+      expect(session).to be_empty
+    end
+  end
 
 end
