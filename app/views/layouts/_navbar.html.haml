@@ -9,5 +9,8 @@
       %a.navbar-brand{href: root_path}Autotrakr
 
     .navbar-right
-      = link_to 'Login', login_path, class: 'btn btn-sm navbar-btn btn-primary'
-      = link_to 'Sign Up', new_user_path, class: 'btn btn-sm navbar-btn btn-default'
+      -if current_user
+        = link_to 'Logout', logout_path, class: 'btn btn-sm navbar-btn btn-primary'
+      -else
+        = link_to 'Login', login_path, class: 'btn btn-sm navbar-btn btn-primary'
+        = link_to 'Sign Up', new_user_path, class: 'btn btn-sm navbar-btn btn-default'
