@@ -84,9 +84,21 @@ RSpec.describe SessionsController, type: :controller do
   end
 
   describe "DELETE #destroy" do
+    let!(:user) { create(:user, :valid_password) }
+    
+    before do
+      sign_in user
+    end
+
     it "deletes the session" do
       delete :destroy
       expect(session).to be_empty
+    end
+
+    it "redirects to the home page" do
+      delete :destroy
+      expect(response).to be_redirect
+      expect(response).to redirect_to(root_url)
     end
   end
 
