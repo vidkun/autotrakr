@@ -3,10 +3,11 @@ class User
   include ActiveModel::SecurePassword
 
   field :username, type: String
-  field :email, type: String
+  field :email, type: String #need an index on this
   field :first_name, type: String
   field :last_name, type: String
   field :password_digest, type: String
+  field :password_reset_token, type: String  #need an index on this
 
   has_secure_password
 

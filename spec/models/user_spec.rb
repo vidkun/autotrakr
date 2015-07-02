@@ -43,4 +43,11 @@ describe User do
     expect(user.email ).to eq( user.email.downcase )
   end
 
+  describe "#generate_password_reset_token!" do
+    let(:user) { create :user, :valid_password }
+    it "changes the password_reset_token attribute" do
+      expect{ user.generate_password_reset_token! }.to change{user.password_reset_token}
+    end
+  end
+
 end
