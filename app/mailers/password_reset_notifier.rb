@@ -1,2 +1,0 @@
-class PasswordResetNotifier < ApplicationMailer
-end
