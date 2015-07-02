@@ -55,17 +55,17 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  # describe "GET #edit" do
-  #   it "returns http success" do
-  #     get :edit
-  #     expect(response).to have_http_status(:success)
-  #   end
+  describe "GET #edit" do
+    it "returns http success" do
+      get :edit
+      expect(response).to have_http_status(:success)
+    end
 
-  #   it "renders the edit template" do
-  #     get :edit
-  #     expect(response).to render_template :edit
-  #   end
-  # end
+    it "renders the edit template" do
+      get :edit
+      expect(response).to render_template :edit
+    end
+  end
 
   # describe "GET #show" do
   #   it "returns http success" do
