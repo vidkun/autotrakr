@@ -1,0 +1,2 @@
+class PasswordResetNotifier < ApplicationMailer
+end
