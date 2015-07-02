@@ -23,8 +23,6 @@ RSpec.describe UsersController, type: :controller do
 
   describe "POST #create" do
     context "with valid params" do
-      # let!(:valid_user) { build(:user, :valid_password) }
-
       it "creates a new user" do
         expect {
           post :create, {user: valid_attributes}, valid_session
@@ -56,7 +54,7 @@ RSpec.describe UsersController, type: :controller do
   end
 
   context "as a logged in user" do
-    let!(:user) { build(:user, :valid_password) }
+    let!(:user) { create(:user, :valid_password) }
 
     before do
       sign_in user
@@ -73,6 +71,29 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to render_template :edit
       end
     end
+
+    # describe "PATCH #update" do
+    #   let(:new_email) { Faker::Internet.safe_email }
+
+    #   it "updates the user attributes" do
+    #     patch :update, id: user.id, user: FactoryGirl.attributes_for(:user, email: new_email)
+    #     expect( assigns(:user).email ).to eq(new_email)
+    #   end
+
+    #   it "redirects to the user path" do
+    #     user.email = new_email
+    #     patch :update, id: user.id, user: user.attributes.symbolize_keys
+    #     expect(response).to be_redirect
+    #     expect(response).to redirect_to( user_url( assigns(:user) ) )
+    #   end
+
+    #   it "sets the flash success message" do
+    #     new_attributes = FactoryGirl.attributes_for(:user, email: new_email)
+    #     new_attributes[:username] = user.username
+    #     patch :update, id: user.id, user: new_attributes
+    #     expect(flash[:notice]).to eq("User #{user.username} was successfully updated.")
+    #   end
+    # end
 
     describe "GET #show" do
       it "returns http success" do
