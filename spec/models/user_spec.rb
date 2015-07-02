@@ -48,6 +48,11 @@ describe User do
     it "changes the password_reset_token attribute" do
       expect{ user.generate_password_reset_token! }.to change{user.password_reset_token}
     end
+
+    it "calls SecureRandom.urlsafe_base64 to generate the password_reset_token" do
+      expect(SecureRandom).to receive(:urlsafe_base64)
+      user.generate_password_reset_token!
+    end
   end
 
 end
