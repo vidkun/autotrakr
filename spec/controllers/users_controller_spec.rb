@@ -56,13 +56,19 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe "GET #edit" do
+    let!(:user) { build(:user, :valid_password) }
+
+    before do
+      sign_in user
+    end
+
     it "returns http success" do
-      get :edit
+      get :edit, id: user.id
       expect(response).to have_http_status(:success)
     end
 
     it "renders the edit template" do
-      get :edit
+      get :edit, id: user.id
       expect(response).to render_template :edit
     end
   end
