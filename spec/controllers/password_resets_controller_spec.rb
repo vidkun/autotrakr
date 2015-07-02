@@ -28,6 +28,23 @@ RSpec.describe PasswordResetsController, type: :controller do
           post :create, email: user.email
         }.to change(ActionMailer::Base.deliveries, :size)
       end
+
+      it "sets the flash message" do
+        post :create, email: "notauser@notfound.com"
+        expect(flash[:notice]).to match("An email has been sent with further instructions")
+      end
+    end
+
+    context "with no user found" do
+      it "renders the new template" do
+        post :create, email: "notauser@notfound.com"
+        expect(response).to render_template(:new)
+      end
+
+      it "sets the flash message" do
+        post :create, email: "notauser@notfound.com"
+        expect(flash[:notice]).to match("An email has been sent with further instructions")
+      end
     end
   end
 end
