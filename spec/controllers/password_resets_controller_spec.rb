@@ -47,4 +47,77 @@ RSpec.describe PasswordResetsController, type: :controller do
       end
     end
   end
+
+  describe "GET edit" do
+    context "with a valid password_reset_token" do
+      let(:user) { create(:user, :valid_password) }
+      before { user.generate_password_reset_token! }
+
+      it "renders the edit template" do
+        get :edit, id: user.password_reset_token
+        expect(response).to render_template(:edit)
+      end
+
+      it "assigns a @user" do
+        get :edit, id: user.password_reset_token
+        expect( assigns(:user) ).to eq(user)
+      end
+    end
+
+    context "with password_reset_token not found" do
+      it "renders the 404 page" do
+        get :edit, id: "nope"
+        expect(response.status).to eq(404)
+        expect(response).to render_template(file: "#{Rails.root}/public/404.html")
+      end
+    end
+  end
+
+  describe "PATCH update" do
+    context "with no password_reset_token found" do
+      it "renders the edit page" do
+        patch :update, id: "nope", user: { password: "newpassword", password_confirmation: "newpassword" }
+        expect(response).to render_template(:edit)
+      end
+
+      it "sets the flash message" do
+        patch :update, id: "nope", user: { password: "newpassword", password_confirmation: "newpassword" }
+        expect(flash[:notice]).to match(/not found/)
+      end
+    end
+
+    context "with a valid token" do
+      let(:user) { create(:user, :valid_password) }
+      let(:newpassword) { Faker::Internet.password(8, 50) }
+      before { user.generate_password_reset_token! }
+
+      it "updates the user's password" do
+        expect{
+          patch :update, id: user.password_reset_token, user: { password: newpassword, password_confirmation: newpassword }
+          user.reload
+        }.to change(user, :password_digest)
+      end
+
+      it "clears the user's password_reset_token" do
+        patch :update, id: user.password_reset_token, user: { password: newpassword, password_confirmation: newpassword }
+        user.reload
+        expect(user.password_reset_token).to be_blank
+      end
+
+      it "sets the session[:user_id] to the user's id" do
+        patch :update, id: user.password_reset_token, user: { password: newpassword, password_confirmation: newpassword }
+        expect(session[:user_id]).to eq(user.id)
+      end
+
+      it "sets the flash message" do
+        patch :update, id: user.password_reset_token, user: { password: newpassword, password_confirmation: newpassword }
+        expect(flash[:notice]).to match("Password successfully updated.")
+      end
+
+      it "redirects to the user's profile" do
+        patch :update, id: user.password_reset_token, user: { password: newpassword, password_confirmation: newpassword }
+        expect(response).to redirect_to(user_path(user))
+      end
+    end
+  end
 end
