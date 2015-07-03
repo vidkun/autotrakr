@@ -6,17 +6,16 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      flash[:notice] = "Login Successful"
-      redirect_to user_path(user)
+      redirect_to user_path(user), notice: "Login Successful"
     else
-      flash[:alert] = "Login failed. Please check your email and password."
-      render :new
+      render :new, alert: "Login failed. Please check your email and password."
     end
   end
 
   def destroy
+    session[:user_id] = nil
     reset_session
-    redirect_to root_url
+    redirect_to root_url, notice: "You have been logged out."
   end
 
 end

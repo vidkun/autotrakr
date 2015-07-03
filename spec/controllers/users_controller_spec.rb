@@ -73,11 +73,12 @@ RSpec.describe UsersController, type: :controller do
     end
 
     # describe "PATCH #update" do
-    #   let(:new_email) { Faker::Internet.safe_email }
+    #   let!(:new_email) { Faker::Internet.safe_email }
 
     #   it "updates the user attributes" do
-    #     patch :update, id: user.id, user: FactoryGirl.attributes_for(:user, email: new_email)
-    #     expect( assigns(:user).email ).to eq(new_email)
+    #     patch :update, id: user.id, user: { email: new_email }
+    #     user.reload
+    #     expect(user.email).to eq(new_email)
     #   end
 
     #   it "redirects to the user path" do
@@ -93,7 +94,7 @@ RSpec.describe UsersController, type: :controller do
     #     patch :update, id: user.id, user: new_attributes
     #     expect(flash[:notice]).to eq("User #{user.username} was successfully updated.")
     #   end
-    # end
+    end
 
     describe "GET #show" do
       it "returns http success" do
