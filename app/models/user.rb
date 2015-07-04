@@ -14,10 +14,12 @@ class User
   validates :password, presence: true,
                        length: { minimum: 8 },
                        on: :create
-  validates_presence_of :email
-  validates_uniqueness_of :email,
-                          case_sensitive: false,
-                          message: "is already taken"
+  # validates :email, presence: true
+  validates :email, presence: true,
+                    uniqueness: {
+                      case_sensitive: false,
+                      message: "is already taken"
+                    }
 
   before_save :downcase_email
 

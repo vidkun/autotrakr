@@ -1,10 +1,9 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe UsersController, type: :controller do
-
-  let(:valid_attributes) { {email: "user@email.com",
-                            password: "iamapassword",
-                            password_confirmation: "iamapassword"} }
+  let(:valid_attributes) { { email: "user@email.com",
+                             password: "iamapassword",
+                             password_confirmation: "iamapassword" } }
 
   let(:valid_session) { {} }
 
@@ -24,29 +23,29 @@ RSpec.describe UsersController, type: :controller do
     context "with valid params" do
       it "creates a new user" do
         expect {
-          post :create, {user: valid_attributes}, valid_session
+          post :create, { user: valid_attributes }, valid_session
         }.to change(User, :count).by(1)
       end
 
       it "assigns a newly created user as @user" do
-        post :create, {user: valid_attributes}, valid_session
-        expect( assigns(:user) ).to be_a(User)
-        expect( assigns(:user) ).to be_persisted
+        post :create, { user: valid_attributes }, valid_session
+        expect(assigns(:user)).to be_a(User)
+        expect(assigns(:user)).to be_persisted
       end
 
       it "redirects to the user path" do
-        post :create, {user: valid_attributes}, valid_session
+        post :create, { user: valid_attributes }, valid_session
         expect(response).to be_redirect
-        expect(response).to redirect_to( user_path( assigns(:user) ) )
+        expect(response).to redirect_to(user_path(assigns(:user)))
       end
 
       it "sets the flash success message" do
-        post :create, {user: valid_attributes}, valid_session
+        post :create, { user: valid_attributes }, valid_session
         expect(flash[:notice]).to eq("Registration successful!")
       end
 
       it "sets the session user_id to the created user" do
-        post :create, {user: valid_attributes}, valid_session
+        post :create, { user: valid_attributes }, valid_session
         expect(session[:user_id]).to eq(User.find_by(email: valid_attributes[:email]).id)
       end
     end
@@ -83,7 +82,7 @@ RSpec.describe UsersController, type: :controller do
       it "redirects to the user path" do
         patch :update, id: user.id, user: { email: new_email }
         expect(response).to be_redirect
-        expect(response).to redirect_to( user_url( assigns(:user) ) )
+        expect(response).to redirect_to(user_url(assigns(:user)))
       end
 
       it "sets the flash success message" do

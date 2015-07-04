@@ -26,7 +26,7 @@ describe "Forgotten password" do
     fill_in "Confirm Password", with: newpassword
     click_button "Change Password"
     expect(page).to have_content("Password successfully updated.")
-    expect(page.current_path).to eq( user_path(user) )
+    expect(page.current_path).to eq(user_path(user))
 
     click_link "Logout"
     expect(page).to have_content("You have been logged out.")

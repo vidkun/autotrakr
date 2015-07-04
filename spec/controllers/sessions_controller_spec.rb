@@ -1,7 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe SessionsController, type: :controller do
-
   describe "GET #new" do
     it "returns http success" do
       get :new
@@ -16,7 +15,6 @@ RSpec.describe SessionsController, type: :controller do
 
   describe "POST #create" do
     context "with correct credentials" do
-      
       let!(:user) { create(:user, :valid_password) }
 
       it "redirects to the user path" do
@@ -26,7 +24,9 @@ RSpec.describe SessionsController, type: :controller do
       end
 
       it "finds the user" do
-        expect(User).to receive(:find_by).with({email: user.email}).and_return(user)
+        expect(User).to receive(:find_by)
+          .with(email: user.email).and_return(user)
+
         post :create, email: user.email, password: user.password
       end
 
@@ -62,7 +62,7 @@ RSpec.describe SessionsController, type: :controller do
     context "with blank credentials" do
       let(:email) { "" }
       let(:password) { "" }
-      
+
       it_behaves_like "denied login"
     end
 
@@ -80,12 +80,11 @@ RSpec.describe SessionsController, type: :controller do
 
       it_behaves_like "denied login"
     end
-
   end
 
   describe "DELETE #destroy" do
     let!(:user) { create(:user, :valid_password) }
-    
+
     before do
       sign_in user
     end
@@ -101,5 +100,4 @@ RSpec.describe SessionsController, type: :controller do
       expect(response).to redirect_to(root_url)
     end
   end
-
 end

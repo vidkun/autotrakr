@@ -18,5 +18,4 @@ class SessionsController < ApplicationController
     reset_session
     redirect_to root_url, notice: "You have been logged out."
   end
-
 end

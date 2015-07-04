@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe "Logging In" do
   it "logs the user in and goes to the user page" do

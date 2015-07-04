@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
       true
     else
       redirect_to login_path,
-        alert: "You must be logged in to access that page."
+                  alert: "You must be logged in to access that page."
     end
   end
 end
