@@ -8,14 +8,15 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       redirect_to user_path(user), notice: "Login Successful"
     else
-      render :new, alert: "Login failed. Please check your email and password."
+      flash[:alert] = "Login failed. Please check your email and password."
+      render :new
     end
   end
 
   def destroy
     session[:user_id] = nil
     reset_session
-    redirect_to root_url, notice: "You have been logged out."
+    redirect_to root_url , notice: "You have been logged out."
   end
 
 end

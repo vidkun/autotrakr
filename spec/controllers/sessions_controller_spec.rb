@@ -92,7 +92,7 @@ RSpec.describe SessionsController, type: :controller do
 
     it "deletes the session" do
       delete :destroy
-      expect(session).to be_empty
+      expect(session[:user_id]).to be_nil
     end
 
     it "redirects to the home page" do

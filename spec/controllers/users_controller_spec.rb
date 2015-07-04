@@ -43,7 +43,7 @@ RSpec.describe UsersController, type: :controller do
 
       it "sets the flash success message" do
         post :create, {user: valid_attributes}, valid_session
-        expect(flash[:notice]).to eq("User #{assigns(:user).username} was successfully created.")
+        expect(flash[:notice]).to eq("Registration successful!")
       end
 
       it "sets the session user_id to the created user" do
@@ -94,7 +94,7 @@ RSpec.describe UsersController, type: :controller do
     #     patch :update, id: user.id, user: new_attributes
     #     expect(flash[:notice]).to eq("User #{user.username} was successfully updated.")
     #   end
-    end
+    # end
 
     describe "GET #show" do
       it "returns http success" do
