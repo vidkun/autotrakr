@@ -11,10 +11,11 @@ class User
 
   has_secure_password
 
-  validates :password, length: { minimum: 8 }
+  validates :password, presence: true,
+                       length: { minimum: 8 },
+                       on: :create
   validates_presence_of :username,
-                        :email,
-                        :password
+                        :email
   validates_uniqueness_of :username,
                           :email,
                           case_sensitive: false,

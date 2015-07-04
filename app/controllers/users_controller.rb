@@ -23,7 +23,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to users_url,
+      redirect_to user_url(@user),
                   notice: "User #{@user.username} was successfully updated."
     else
       render :edit

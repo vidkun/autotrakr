@@ -72,29 +72,26 @@ RSpec.describe UsersController, type: :controller do
       end
     end
 
-    # describe "PATCH #update" do
-    #   let!(:new_email) { Faker::Internet.safe_email }
+    describe "PATCH #update" do
+      let!(:new_email) { Faker::Internet.safe_email }
 
-    #   it "updates the user attributes" do
-    #     patch :update, id: user.id, user: { email: new_email }
-    #     user.reload
-    #     expect(user.email).to eq(new_email)
-    #   end
+      it "updates the user attributes" do
+        patch :update, id: user.id, user: { email: new_email }
+        user.reload
+        expect(user.email).to eq(new_email)
+      end
 
-    #   it "redirects to the user path" do
-    #     user.email = new_email
-    #     patch :update, id: user.id, user: user.attributes.symbolize_keys
-    #     expect(response).to be_redirect
-    #     expect(response).to redirect_to( user_url( assigns(:user) ) )
-    #   end
+      it "redirects to the user path" do
+        patch :update, id: user.id, user: { email: new_email }
+        expect(response).to be_redirect
+        expect(response).to redirect_to( user_url( assigns(:user) ) )
+      end
 
-    #   it "sets the flash success message" do
-    #     new_attributes = FactoryGirl.attributes_for(:user, email: new_email)
-    #     new_attributes[:username] = user.username
-    #     patch :update, id: user.id, user: new_attributes
-    #     expect(flash[:notice]).to eq("User #{user.username} was successfully updated.")
-    #   end
-    # end
+      it "sets the flash success message" do
+        patch :update, id: user.id, user: { email: new_email }
+        expect(flash[:notice]).to eq("User #{user.username} was successfully updated.")
+      end
+    end
 
     describe "GET #show" do
       it "returns http success" do

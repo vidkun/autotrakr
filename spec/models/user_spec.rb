@@ -9,13 +9,13 @@ describe User do
                                   :password_digest) }
   it { is_expected.to validate_presence_of(:username) }
   it { is_expected.to validate_presence_of(:email) }
-  it { is_expected.to validate_presence_of(:password) }
+  it { is_expected.to validate_presence_of(:password).on(:create) }
   it { is_expected.to validate_uniqueness_of(:email).case_insensitive
                                                     .with_message('is already taken') }
   it { is_expected.to validate_uniqueness_of(:username).case_insensitive
                                                        .with_message('is already taken') }
 
-  it 'fails because no passwrod' do
+  it 'fails because no password' do
     expect(build(:user, password: nil)).to_not be_valid
     expect(build(:user, password: nil).save ).to be false
   end
