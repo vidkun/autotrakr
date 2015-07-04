@@ -10,9 +10,6 @@ describe 'Signing up' do
     expect(page).to have_content('Sign Up')
     click_link 'Sign Up'
 
-    fill_in 'Username', with: user.username
-    fill_in 'First Name', with: user.first_name
-    fill_in 'Last Name', with: user.last_name
     fill_in 'Email', with: user.email
     fill_in 'Password', with: user.password
     fill_in 'Confirm Password', with: user.password_confirmation

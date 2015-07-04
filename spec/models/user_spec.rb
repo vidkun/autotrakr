@@ -2,18 +2,13 @@ require 'rails_helper'
  
 describe User do
  
-  it { is_expected.to have_fields(:username,
-                                  :email,
-                                  :first_name,
-                                  :last_name,
+  it { is_expected.to have_fields(:email,
                                   :password_digest) }
-  it { is_expected.to validate_presence_of(:username) }
+
   it { is_expected.to validate_presence_of(:email) }
   it { is_expected.to validate_presence_of(:password).on(:create) }
   it { is_expected.to validate_uniqueness_of(:email).case_insensitive
                                                     .with_message('is already taken') }
-  it { is_expected.to validate_uniqueness_of(:username).case_insensitive
-                                                       .with_message('is already taken') }
 
   it 'fails because no password' do
     expect(build(:user, password: nil)).to_not be_valid

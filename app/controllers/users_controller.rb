@@ -24,7 +24,7 @@ class UsersController < ApplicationController
   def update
     if @user.update(user_params)
       redirect_to user_url(@user),
-                  notice: "User #{@user.username} was successfully updated."
+                  notice: "Update successful!"
     else
       render :edit
     end
@@ -37,7 +37,7 @@ class UsersController < ApplicationController
     # Not sure I'm gonna keep this action. Do users need to be deleted?
     begin
       @user.destroy
-      flash[:notice] = "User #{user.username} deleted!"
+      flash[:notice] = "User #{user.email} deleted!"
     rescue StandardError => e
       flash[:alert] = e.message
     end
@@ -51,10 +51,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-  params.require(:user).permit(:username,
-                               :first_name,
-                               :last_name,
-                               :email,
+  params.require(:user).permit(:email,
                                :password,
                                :password_confirmation)
   end

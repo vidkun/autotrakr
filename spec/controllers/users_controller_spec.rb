@@ -2,8 +2,7 @@ require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
 
-  let(:valid_attributes) { {username: "iamauser",
-                            email: "user@email.com",
+  let(:valid_attributes) { {email: "user@email.com",
                             password: "iamapassword",
                             password_confirmation: "iamapassword"} }
 
@@ -89,7 +88,7 @@ RSpec.describe UsersController, type: :controller do
 
       it "sets the flash success message" do
         patch :update, id: user.id, user: { email: new_email }
-        expect(flash[:notice]).to eq("User #{user.username} was successfully updated.")
+        expect(flash[:notice]).to eq("Update successful!")
       end
     end
 
