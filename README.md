@@ -1,4 +1,4 @@
-== README
+# README
 
 [![Code Climate](https://codeclimate.com/github/vidkun/autotrakr/badges/gpa.svg)](https://codeclimate.com/github/vidkun/autotrakr)
 
