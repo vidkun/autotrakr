@@ -11,3 +11,12 @@
 /log/*
 !/log/.keep
 /tmp
+
+.DS_Store
+*.gem
+*.swp
+
+# Ignore application configuration
+/config/application.yml
+
+.rubocop.yml

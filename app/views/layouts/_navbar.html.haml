@@ -1,0 +1,17 @@
+%nav.navbar.navbar-inverse
+  .container
+    .navbar-header
+      %button.navbar-toggle.collapsed{type: "button", "aria-expanded": :false, data: {toggle: "collapse", target: "#bs-example-navbar-collapse-1"}}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand{href: root_path}Autotrakr
+
+    .navbar-right
+      -if current_user
+        %p{class: "navbar-link navbar-text"}= link_to current_user.email, user_path(current_user)
+        = link_to "Logout", logout_path, class: "btn btn-sm navbar-btn btn-primary"
+      -else
+        = link_to "Login", login_path, class: "btn btn-sm navbar-btn btn-primary"
+        = link_to "Sign Up", new_user_path, class: "btn btn-sm navbar-btn btn-default"
