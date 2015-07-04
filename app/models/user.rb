@@ -2,9 +2,9 @@ class User
   include Mongoid::Document
   include ActiveModel::SecurePassword
 
-  field :email, type: String #need an index on this
+  field :email, type: String
   field :password_digest, type: String
-  field :password_reset_token, type: String  #need an index on this
+  field :password_reset_token, type: String
 
   index :email => 1
   index :password_reset_token => 1
