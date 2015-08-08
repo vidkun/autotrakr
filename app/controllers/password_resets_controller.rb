@@ -15,14 +15,14 @@ class PasswordResetsController < ApplicationController
   end
 
   def edit
-    @user = User.find_by(password_reset_token: params[:id])
+    @user = User.where(password_reset_token: params[:id]).first
     render file: "public/404.html", status: :not_found unless @user
   end
 
   def update
-    @user = User.find_by(password_reset_token: params[:id])
-    if @user && @user.update_attributes(user_params)
-      @user.update_attributes(password_reset_token: nil)
+    @user = User.where(password_reset_token: params[:id]).first
+    if @user && @user.update(user_params)
+      @user.update({password_reset_token: nil})
       session[:user_id] = @user.id
       redirect_to user_path(@user),
                   notice: "Password successfully updated."
