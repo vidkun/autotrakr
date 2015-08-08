@@ -1,15 +1,11 @@
 class User
   include NoBrainer::Document
   include NoBrainer::Document::Timestamps
-  #include Mongoid::Document
   include ActiveModel::SecurePassword
 
-  field :email, type: String, index: true
+  field :email, type: String, :index => true
   field :password_digest, type: String
-  field :password_reset_token, type: String, index: true
-
-#  index :email => 1
-#  index :password_reset_token => 1
+  field :password_reset_token, type: String, :index => true
 
   has_secure_password
 
@@ -30,6 +26,6 @@ class User
   end
 
   def generate_password_reset_token!
-    update_attribute(:password_reset_token, SecureRandom.urlsafe_base64(64))
+    update({password_reset_token: SecureRandom.urlsafe_base64(64)})
   end
 end

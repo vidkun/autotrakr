@@ -13,7 +13,7 @@ RSpec.describe PasswordResetsController, type: :controller do
       let(:user) { create(:user, :valid_password) }
 
       it "finds the user" do
-        expect(User).to receive(:find_by).with(email: user.email).and_return(user)
+        expect(User).to receive(:where).with(email: user.email).and_return(user)
         post :create, email: user.email
       end
 
