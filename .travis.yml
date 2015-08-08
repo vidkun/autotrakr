@@ -1,0 +1,15 @@
+language: ruby
+rvm:
+ - "2.2.2"
+
+# Make sure we startup the database
+services:
+  - mongodb
+
+# Sometimes mongodb takes a bit to start accepting connections
+# so let's take a little nap.
+before_script:
+  - sleep 15
+
+# We're using rspec instead of default rake
+script: bundle exec rspec spec
