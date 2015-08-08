@@ -24,14 +24,14 @@ RSpec.describe SessionsController, type: :controller do
       end
 
       it "finds the user" do
-        expect(User).to receive(:find_by)
+        expect(User).to receive(:where)
           .with(email: user.email).and_return(user)
 
         post :create, email: user.email, password: user.password
       end
 
       it "authenticates the user" do
-        allow(User).to receive(:find_by).and_return(user)
+        allow(User).to receive(:where).and_return(user)
         expect(user).to receive(:authenticate)
         post :create, email: user.email, password: user.password
       end
