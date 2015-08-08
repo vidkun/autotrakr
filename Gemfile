@@ -15,6 +15,7 @@ gem "haml"
 gem "figaro"
 gem "high_voltage"
 gem "bootstrap-sass"
+gem "nobrainer"
 
 # Use Capistrano for deployment
 # gem "capistrano-rails", group: :development
