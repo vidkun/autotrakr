@@ -9,7 +9,7 @@ gem "turbolinks"
 gem "jbuilder", "~> 2.0"
 gem "sdoc", "~> 0.4.0", group: :doc
 gem "unicorn"
-gem "mongoid", "~> 4.0.0"
+#gem "mongoid", "~> 4.0.0"
 gem "bcrypt", "~> 3.1.7"
 gem "haml"
 gem "figaro"
@@ -30,7 +30,7 @@ group :development, :test do
 
   gem "rspec-rails", "~> 3.0"
   gem "factory_girl_rails"
-  gem "mongoid-rspec", "~> 2.1.0"
+#  gem "mongoid-rspec", "~> 2.1.0"
   gem "database_cleaner"
   gem "faker"
 end
