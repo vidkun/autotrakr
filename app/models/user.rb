@@ -1,13 +1,15 @@
 class User
-  include Mongoid::Document
+  include NoBrainer::Document
+  include NoBrainer::Document::Timestamps
+  #include Mongoid::Document
   include ActiveModel::SecurePassword
 
-  field :email, type: String
+  field :email, type: String, index: true
   field :password_digest, type: String
-  field :password_reset_token, type: String
+  field :password_reset_token, type: String, index: true
 
-  index :email => 1
-  index :password_reset_token => 1
+#  index :email => 1
+#  index :password_reset_token => 1
 
   has_secure_password
 
