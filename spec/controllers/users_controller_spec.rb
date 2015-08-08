@@ -46,7 +46,7 @@ RSpec.describe UsersController, type: :controller do
 
       it "sets the session user_id to the created user" do
         post :create, { user: valid_attributes }, valid_session
-        expect(session[:user_id]).to eq(User.find_by(email: valid_attributes[:email]).id)
+        expect(session[:user_id]).to eq(User.where(email: valid_attributes[:email]).first.id)
       end
     end
   end
