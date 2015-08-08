@@ -1,6 +1,6 @@
 # README
 
-[![Code Climate](https://codeclimate.com/github/vidkun/autotrakr/badges/gpa.svg)](https://codeclimate.com/github/vidkun/autotrakr)
+[![Code Climate](https://codeclimate.com/github/vidkun/autotrakr/badges/gpa.svg)](https://codeclimate.com/github/vidkun/autotrakr)[![Build Status](https://travis-ci.org/vidkun/autotrakr.svg?branch=master)](https://travis-ci.org/vidkun/autotrakr)
 
 This project is every bit as much to solve my own problem as it is a means for
 me to learn and explore new technologies, such as mongodb, background workers (sidekiq),
