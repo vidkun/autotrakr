@@ -22,7 +22,6 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
 
   config.before(:all) do
-    NoBrainer.drop!
     NoBrainer.sync_schema
   end
 
