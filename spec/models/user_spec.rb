@@ -2,8 +2,6 @@ require "rails_helper"
 
 describe User do
   let!(:user) { create(:user, :valid_password) }
-  # it { is_expected.to have_fields(:email, :password_digest) }
-  # it { is_expected.to validate_presence_of(:password).on(:create) }
 
   it "should have an email field" do
     expect(user.attributes).to include(:email)
