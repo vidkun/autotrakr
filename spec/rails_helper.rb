@@ -28,7 +28,6 @@ RSpec.configure do |config|
 
   config.before(:each) do
     NoBrainer.purge!
-    # NoBrainer::Loader.cleanup
   end
 
 #  config.before(:suite) do
