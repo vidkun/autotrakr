@@ -3,8 +3,8 @@ class PasswordResetsController < ApplicationController
   end
 
   def create
-    user = User.where(email: params[:email])
-    if user.present?
+    user = User.where(email: params[:email]).first
+    if user #.present?
       user.generate_password_reset_token!
       Notifier.password_reset(user).deliver_now
       redirect_to login_path
