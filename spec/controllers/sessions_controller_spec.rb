@@ -23,18 +23,19 @@ RSpec.describe SessionsController, type: :controller do
         expect(response).to redirect_to(user_path(user))
       end
 
-      it "finds the user" do
-        expect(User).to receive(:find_by)
-          .with(email: user.email).and_return(user)
-
-        post :create, email: user.email, password: user.password
-      end
-
-      it "authenticates the user" do
-        allow(User).to receive(:find_by).and_return(user)
-        expect(user).to receive(:authenticate)
-        post :create, email: user.email, password: user.password
-      end
+      # I don't want to make user -> @user in the controller just so that
+      # I can test that it finds the variables. The outcome of this action is
+      # that session[:user_id] gets set and user is redirected to their path.
+      # Testing those two items should suffice.
+      # it "finds the user" do
+      #   post :create, email: user.email, password: user.password
+      #   expect(assigns(:user)).to be_a(User)
+      # end
+      #
+      # it "authenticates the user" do
+      #   post :create, email: user.email, password: user.password
+      #   expect_any_instance_of(User).to receive(:authenticate)
+      # end
 
       it "sets the user_id in the session" do
         post :create, email: user.email, password: user.password

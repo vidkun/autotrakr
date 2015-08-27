@@ -1,20 +1,34 @@
 require "rails_helper"
 
 describe User do
+  let!(:user) { create(:user, :valid_password) }
 
-  it { is_expected.to have_fields(:email, :password_digest) }
-  it { is_expected.to validate_presence_of(:email) }
-  it { is_expected.to validate_presence_of(:password).on(:create) }
-  it { is_expected.to validate_uniqueness_of(:email).case_insensitive
-    .with_message("is already taken")
-  }
+  it "should have an email field" do
+    expect(user.attributes).to include(:email)
+  end
+
+  it "should have a password_digest field" do
+    expect(user.attributes).to include(:password_digest)
+  end
+
+  it "fails because email is not unique" do
+    new_user = build(:user, email: user.email)
+    expect(new_user).to_not be_valid
+    expect(new_user.save).to be false
+    # there has to be a better way to check this error message
+    expect(new_user.errors[:email].first).to eq("is already taken")
+  end
+
+  it "fails because no email" do
+    expect(build(:user, email: "")).to_not be_valid
+    expect(build(:user, email: "").save).to be false
+  end
 
   it "fails because no password" do
     expect(build(:user, password: nil)).to_not be_valid
     expect(build(:user, password: nil).save).to be false
   end
 
-  # it { is_expected.to validate_length_of(:password).with_minimum(8) }
   it "fails because passwrod to short" do
     expect(build(:user, :short_password)).to_not be_valid
     expect(build(:user, :short_password).save).to be false
