@@ -12,4 +12,12 @@ class Vehicle
   field :mileage, :type => Integer
   field :color, :type => String
   belongs_to :user, :index => true
+
+  validates :year,
+            :make,
+            :model, presence: true
+  validates :year,
+            :mileage, numericality: { only_integer: true }
+  validates :year, length: { maximum: 4 }
+  validates :mileage, length: { maximum: 7 }
 end
