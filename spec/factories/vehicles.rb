@@ -1,15 +1,15 @@
 FactoryGirl.define do
   factory :vehicle do
-    year 1
-make "MyString"
-model "MyString"
-engine "MyString"
-transmission "MyString"
-drive "MyString"
-fuel "MyString"
-mileage 1
-color "MyString"
-user nil
+    year          { Faker::Number.number(4) }
+    make          { Faker::Company.name }
+    model         { Faker::Lorem.words }
+    engine        { Faker::Lorem.words }
+    transmission  { Faker::Lorem.word }
+    drive         { Faker::Lorem.word }
+    fuel          { Faker::Lorem.word }
+    mileage       { Faker::Number.number(6) }
+    color         { Faker::Commerce.color }
+    user          { create(:user, :valid_password) }
   end
 
 end
