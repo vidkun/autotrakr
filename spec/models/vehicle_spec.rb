@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Vehicle, type: :model do
-  # pending "add some examples to (or delete) #{__FILE__}"
   let(:vehicle) { create(:vehicle) }
 
   it "should have a year field" do
@@ -38,5 +37,52 @@ RSpec.describe Vehicle, type: :model do
 
   it "should have a color field" do
     expect(vehicle.attributes).to include(:color)
+  end
+
+  it "fails because no year" do
+    invalid_vehicle = build(:vehicle, year: nil)
+    expect(invalid_vehicle).to_not be_valid
+    expect(invalid_vehicle.save).to be false
+
+  end
+
+  it "fails because no make" do
+    invalid_vehicle = build(:vehicle, make: "")
+    expect(invalid_vehicle).to_not be_valid
+    expect(invalid_vehicle.save).to be false
+  end
+
+  it "fails because no model" do
+    invalid_vehicle = build(:vehicle, model: "")
+    expect(invalid_vehicle).to_not be_valid
+    expect(invalid_vehicle.save).to be false
+  end
+
+  it "fails because year is too long" do
+    invalid_vehicle = build(:vehicle, year: Faker::Number.number(5).to_i)
+    expect(invalid_vehicle).to_not be_valid
+    expect(invalid_vehicle.save).to be false
+    expect(invalid_vehicle.errors[:year]).to include("is too long (maximum is 4 characters)")
+  end
+
+  it "fails because mileage is too long" do
+    invalid_vehicle = build(:vehicle, mileage: Faker::Number.number(8).to_i)
+    expect(invalid_vehicle).to_not be_valid
+    expect(invalid_vehicle.save).to be false
+    expect(invalid_vehicle.errors[:mileage]).to include("is too long (maximum is 7 characters)")
+  end
+
+  it "fails because year is not an integer" do
+    invalid_vehicle = build(:vehicle, year: Faker::Lorem.word)
+    expect(invalid_vehicle).to_not be_valid
+    expect(invalid_vehicle.save).to be false
+    expect(invalid_vehicle.errors[:year]).to include("should be a integer")
+  end
+
+  it "fails because mileage is not an integer" do
+    invalid_vehicle = build(:vehicle, mileage: Faker::Lorem.word)
+    expect(invalid_vehicle).to_not be_valid
+    expect(invalid_vehicle.save).to be false
+    expect(invalid_vehicle.errors[:mileage]).to include("should be a integer")
   end
 end
