@@ -45,10 +45,5 @@
   <%= @vehicle.color %>
 </p>
 
-<p>
-  <strong>User:</strong>
-  <%= @vehicle.user %>
-</p>
-
-<%= link_to 'Edit', edit_vehicle_path(@vehicle) %> |
-<%= link_to 'Back', vehicles_path %>
+<%= link_to 'Edit', edit_user_vehicle_path(@vehicle.user, @vehicle) %> |
+<%= link_to 'Back', garage_path %>

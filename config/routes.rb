@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
 
-  resources :vehicles
   resources :sessions, only: [:new, :create, :destroy]
   get 'login', to: 'sessions#new', as: 'login'
   get 'logout', to: 'sessions#destroy', as: 'logout'
 
-  resources :users, except: [:index, :destroy]
+  get "/users/:user_id/garage", to: "vehicles#index", as: "garage"
+  resources :users, except: [:index, :destroy] do
+    resources :vehicles, except: :index
+  end
   get 'signup', to: 'users#new', as: 'signup'
 
   resources :password_resets, only: [:new, :create, :edit, :update]

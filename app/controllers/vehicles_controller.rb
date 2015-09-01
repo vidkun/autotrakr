@@ -1,34 +1,30 @@
 class VehiclesController < ApplicationController
   before_action :set_vehicle, only: [:show, :edit, :update, :destroy]
+  # before_action :set_user
 
-  # GET /vehicles
-  # GET /vehicles.json
   def index
-    @vehicles = Vehicle.all
+    # @vehicles = Vehicle.all
+    @vehicles = current_user.vehicles
   end
 
-  # GET /vehicles/1
-  # GET /vehicles/1.json
   def show
   end
 
-  # GET /vehicles/new
   def new
-    @vehicle = Vehicle.new
+    # @vehicle = Vehicle.new
+    @vehicle = Vehicle.new(user: current_user)
   end
 
-  # GET /vehicles/1/edit
   def edit
   end
 
-  # POST /vehicles
-  # POST /vehicles.json
   def create
-    @vehicle = Vehicle.new(vehicle_params)
+    @user = User.find(current_user.id)
+    @vehicle = Vehicle.new(vehicle_params.merge(user: @user))
 
     respond_to do |format|
       if @vehicle.save
-        format.html { redirect_to @vehicle, notice: 'Vehicle was successfully created.' }
+        format.html { redirect_to [@user, @vehicle], notice: 'Vehicle was successfully created.' }
         format.json { render :show, status: :created, location: @vehicle }
       else
         format.html { render :new }
@@ -64,7 +60,7 @@ class VehiclesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_vehicle
-      @vehicle = Vehicle.find(params[:id])
+      @vehicle = Vehicle.where(id: params[:id]).first
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
