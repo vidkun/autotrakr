@@ -9,6 +9,8 @@ class User
 
   has_secure_password
 
+  has_many :vehicles
+
   validates :password, presence: true,
                        length: { minimum: 8 },
                        on: :create
