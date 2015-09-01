@@ -1,9 +1,8 @@
 class VehiclesController < ApplicationController
   before_action :set_vehicle, only: [:show, :edit, :update, :destroy]
-  # before_action :set_user
+  before_action :set_user, only: [:new, :create, :update, :destroy]
 
   def index
-    # @vehicles = Vehicle.all
     @vehicles = current_user.vehicles
   end
 
@@ -11,21 +10,19 @@ class VehiclesController < ApplicationController
   end
 
   def new
-    # @vehicle = Vehicle.new
-    @vehicle = Vehicle.new(user: current_user)
+    @vehicle = Vehicle.new(user: @user)
   end
 
   def edit
   end
 
   def create
-    @user = User.find(current_user.id)
     @vehicle = Vehicle.new(vehicle_params.merge(user: @user))
 
     respond_to do |format|
       if @vehicle.save
         format.html { redirect_to [@user, @vehicle], notice: 'Vehicle was successfully created.' }
-        format.json { render :show, status: :created, location: @vehicle }
+        format.json { render :show, status: :created, location: [@user, @vehicle] }
       else
         format.html { render :new }
         format.json { render json: @vehicle.errors, status: :unprocessable_entity }
@@ -33,13 +30,11 @@ class VehiclesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /vehicles/1
-  # PATCH/PUT /vehicles/1.json
   def update
     respond_to do |format|
       if @vehicle.update(vehicle_params)
-        format.html { redirect_to @vehicle, notice: 'Vehicle was successfully updated.' }
-        format.json { render :show, status: :ok, location: @vehicle }
+        format.html { redirect_to [@user, @vehicle], notice: 'Vehicle was successfully updated.' }
+        format.json { render :show, status: :ok, location: [@user, @vehicle] }
       else
         format.html { render :edit }
         format.json { render json: @vehicle.errors, status: :unprocessable_entity }
@@ -47,24 +42,33 @@ class VehiclesController < ApplicationController
     end
   end
 
-  # DELETE /vehicles/1
-  # DELETE /vehicles/1.json
   def destroy
     @vehicle.destroy
     respond_to do |format|
-      format.html { redirect_to vehicles_url, notice: 'Vehicle was successfully destroyed.' }
+      format.html { redirect_to garage_url(@user), notice: 'Vehicle was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_vehicle
-      @vehicle = Vehicle.where(id: params[:id]).first
+      @vehicle = Vehicle.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    def set_user
+      @user = User.find(current_user.id)
+    end
+
     def vehicle_params
-      params.require(:vehicle).permit(:year, :make, :model, :engine, :transmission, :drive, :fuel, :mileage, :color, :user_id)
+      params.require(:vehicle).permit(:year,
+                                      :make,
+                                      :model,
+                                      :engine,
+                                      :transmission,
+                                      :drive,
+                                      :fuel,
+                                      :mileage,
+                                      :color,
+                                      :user_id)
     end
 end

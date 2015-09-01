@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+<!-- <p id="notice"><%= notice %></p> -->
 
 <h1>Listing Vehicles</h1>
 
@@ -31,10 +31,9 @@
         <td><%= vehicle.fuel %></td>
         <td><%= vehicle.mileage %></td>
         <td><%= vehicle.color %></td>
-        <td><%= vehicle.user %></td>
-        <td><%= link_to 'Show', vehicle %></td>
-        <td><%= link_to 'Edit', edit_vehicle_path(vehicle) %></td>
-        <td><%= link_to 'Destroy', vehicle, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', [vehicle.user, vehicle] %></td>
+        <td><%= link_to 'Edit', edit_user_vehicle_path(vehicle.user, vehicle) %></td>
+        <td><%= link_to 'Destroy', [vehicle.user, vehicle], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
