@@ -30,7 +30,7 @@ module Autotrakr
     # config.i18n.default_locale = :de
 
     config.generators do |g|
-        g.orm             :mongoid
+        # g.orm             :nobrainer
         # g.template_engine :haml
         g.test_framework  :rspec, :fixture => false
         g.view_specs      false
