@@ -2,17 +2,9 @@ require 'rails_helper'
 
 RSpec.describe VehiclesController, type: :controller do
 
-  let(:valid_session) { {} }
-
   context "as a logged in user" do
     let!(:user) { create(:user, :valid_password) }
     let(:vehicle) { create(:vehicle, user: user) }
-    let(:valid_attributes) { { year: Faker::Number.number(4).to_i,
-                               make: Faker::Company.name,
-                               model: Faker::Lorem.words.join(' '),
-                               user: user
-                             }
-                           }
 
     let(:invalid_attributes) {
       { year: "invalid",
@@ -66,30 +58,41 @@ RSpec.describe VehiclesController, type: :controller do
 
         it "creates a new Vehicle" do
           expect {
-            post :create, {vehicle: @new_vehicle, user_id: user.id}
+            post :create, {vehicle: @new_vehicle,
+                           user_id: user.id}
           }.to change(Vehicle, :count).by(1)
         end
 
         it "assigns a newly created vehicle as @vehicle" do
-          post :create, {vehicle: @new_vehicle, user_id: user.id}
+          post :create, {vehicle: @new_vehicle,
+                         user_id: user.id}
           expect(assigns(:vehicle)).to be_a(Vehicle)
           expect(assigns(:vehicle)).to be_persisted
         end
 
         it "redirects to the created vehicle" do
-          post :create, {vehicle: @new_vehicle, user_id: user.id}
+          post :create, {vehicle: @new_vehicle,
+                         user_id: user.id}
           expect(response).to redirect_to(user_vehicle_path(user, Vehicle.last))
         end
       end
 
       context "with invalid params" do
+        before(:each) do
+          @invalid_vehicle = attributes_for(:vehicle)
+          @invalid_vehicle[:user] = user
+          @invalid_vehicle[:year] = "invalid"
+        end
+
         it "assigns a newly created but unsaved vehicle as @vehicle" do
-          post :create, {:vehicle => invalid_attributes}, valid_session
+          post :create, {vehicle: @invalid_vehicle,
+                         user_id: user.id}
           expect(assigns(:vehicle)).to be_a_new(Vehicle)
         end
 
         it "re-renders the 'new' template" do
-          post :create, {:vehicle => invalid_attributes}, valid_session
+          post :create, {vehicle: @invalid_vehicle,
+                         user_id: user.id}
           expect(response).to render_template("new")
         end
       end
@@ -98,43 +101,49 @@ RSpec.describe VehiclesController, type: :controller do
     describe "PUT #update" do
       context "with valid params" do
         let(:new_attributes) {
-          { year: Faker::Number.number(4).to_i,
-            make: Faker::Company.name,
-            model: Faker::Lorem.words.join(' '),
-            user: user
+          { year: 1234,
+            make: "changed",
+            model: "changed",
           }
         }
 
         it "updates the requested vehicle" do
-          # vehicle = Vehicle.create! valid_attributes
-          put :update, {:id => vehicle.to_param, :vehicle => new_attributes}, valid_session
+          put :update, {id: vehicle.to_param,
+                        vehicle: new_attributes,
+                        user_id: user.id}
           vehicle.reload
-          skip("Add assertions for updated state")
+          expect(vehicle.year).to eq(1234)
+          expect(vehicle.make).to eq("changed")
+          expect(vehicle.model).to eq("changed")
         end
 
         it "assigns the requested vehicle as @vehicle" do
-          # vehicle = Vehicle.create! valid_attributes
-          put :update, {:id => vehicle.to_param, :vehicle => valid_attributes}, valid_session
+          put :update, {id: vehicle.to_param,
+                        vehicle: new_attributes,
+                        user_id: user.id}
           expect(assigns(:vehicle)).to eq(vehicle)
         end
 
         it "redirects to the vehicle" do
-          # vehicle = Vehicle.create! valid_attributes
-          put :update, {:id => vehicle.to_param, :vehicle => valid_attributes}, valid_session
-          expect(response).to redirect_to(vehicle)
+          put :update, {id: vehicle.to_param,
+                        vehicle: new_attributes,
+                        user_id: user.id}
+          expect(response).to redirect_to(user_vehicle_path(user, vehicle))
         end
       end
 
       context "with invalid params" do
         it "assigns the vehicle as @vehicle" do
-          # vehicle = Vehicle.create! valid_attributes
-          put :update, {:id => vehicle.to_param, :vehicle => invalid_attributes}, valid_session
+          put :update, {id: vehicle.to_param,
+                        vehicle: invalid_attributes,
+                        user_id: user.id}
           expect(assigns(:vehicle)).to eq(vehicle)
         end
 
         it "re-renders the 'edit' template" do
-          # vehicle = Vehicle.create! valid_attributes
-          put :update, {:id => vehicle.to_param, :vehicle => invalid_attributes}, valid_session
+          put :update, {id: vehicle.to_param,
+                        vehicle: invalid_attributes,
+                        user_id: user.id}
           expect(response).to render_template("edit")
         end
       end
