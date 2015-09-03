@@ -59,25 +59,26 @@ RSpec.describe VehiclesController, type: :controller do
 
     describe "POST #create" do
       context "with valid params" do
+        before(:each) do
+          @new_vehicle = attributes_for(:vehicle)
+          @new_vehicle[:user] = user
+        end
+
         it "creates a new Vehicle" do
-          # a = 2
-          # binding.pry
-          new_vehicle = attributes_for(:vehicle)
-          new_vehicle[:user] = user
           expect {
-            post :create, {vehicle: new_vehicle, user: user}
+            post :create, {vehicle: @new_vehicle, user_id: user.id}
           }.to change(Vehicle, :count).by(1)
         end
 
         it "assigns a newly created vehicle as @vehicle" do
-          post :create, {user: user, :vehicle => valid_attributes}
+          post :create, {vehicle: @new_vehicle, user_id: user.id}
           expect(assigns(:vehicle)).to be_a(Vehicle)
           expect(assigns(:vehicle)).to be_persisted
         end
 
         it "redirects to the created vehicle" do
-          post :create, {:vehicle => valid_attributes}, valid_session
-          expect(response).to redirect_to(Vehicle.last)
+          post :create, {vehicle: @new_vehicle, user_id: user.id}
+          expect(response).to redirect_to(user_vehicle_path(user, Vehicle.last))
         end
       end
 
