@@ -10,6 +10,7 @@ RSpec.describe VehiclesController, type: :controller do
       { year: "invalid",
         make: 123,
         model: 123,
+        name: 123,
         user: user
       }
     }

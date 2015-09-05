@@ -3,6 +3,14 @@ require "rails_helper"
 RSpec.describe Vehicle, type: :model do
   let(:vehicle) { create(:vehicle) }
 
+  it "should have a name field" do
+    expect(vehicle.attributes).to include(:name)
+  end
+
+  it "should have a vin field" do
+    expect(vehicle.attributes).to include(:vin)
+  end
+
   it "should have a year field" do
     expect(vehicle.attributes).to include(:year)
   end
@@ -39,11 +47,22 @@ RSpec.describe Vehicle, type: :model do
     expect(vehicle.attributes).to include(:color)
   end
 
+  it "fails because no name" do
+    invalid_vehicle = build(:vehicle, name: nil)
+    expect(invalid_vehicle).to_not be_valid
+    expect(invalid_vehicle.save).to be false
+  end
+
+  it "fails because no vin" do
+    invalid_vehicle = build(:vehicle, vin: nil)
+    expect(invalid_vehicle).to_not be_valid
+    expect(invalid_vehicle.save).to be false
+  end
+
   it "fails because no year" do
     invalid_vehicle = build(:vehicle, year: nil)
     expect(invalid_vehicle).to_not be_valid
     expect(invalid_vehicle.save).to be false
-
   end
 
   it "fails because no make" do
@@ -63,6 +82,13 @@ RSpec.describe Vehicle, type: :model do
     expect(invalid_vehicle).to_not be_valid
     expect(invalid_vehicle.save).to be false
     expect(invalid_vehicle.errors[:year]).to include("is too long (maximum is 4 characters)")
+  end
+
+  it "fails because vin is not correct length" do
+    invalid_vehicle = build(:vehicle, vin: Faker::Number.number(5).to_i)
+    expect(invalid_vehicle).to_not be_valid
+    expect(invalid_vehicle.save).to be false
+    expect(invalid_vehicle.errors[:vin]).to include("is the wrong length (should be 17 characters)")
   end
 
   it "fails because mileage is too long" do
