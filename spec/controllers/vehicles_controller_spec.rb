@@ -27,7 +27,7 @@ RSpec.describe VehiclesController, type: :controller do
     end
 
     describe "GET #show" do
-      it "assigns the requested uservehicle as @vehicle" do
+      it "assigns the requested user vehicle as @vehicle" do
         get :show, {id: vehicle.to_param,
                     user_id: user.id}
         expect(assigns(:vehicle)).to eq(vehicle)
@@ -56,21 +56,21 @@ RSpec.describe VehiclesController, type: :controller do
           @new_vehicle[:user] = user
         end
 
-        it "creates a new Vehicle" do
+        it "creates a new user Vehicle" do
           expect {
             post :create, {vehicle: @new_vehicle,
                            user_id: user.id}
           }.to change(Vehicle, :count).by(1)
         end
 
-        it "assigns a newly created vehicle as @vehicle" do
+        it "assigns a newly created user vehicle as @vehicle" do
           post :create, {vehicle: @new_vehicle,
                          user_id: user.id}
           expect(assigns(:vehicle)).to be_a(Vehicle)
           expect(assigns(:vehicle)).to be_persisted
         end
 
-        it "redirects to the created vehicle" do
+        it "redirects to the created user vehicle" do
           post :create, {vehicle: @new_vehicle,
                          user_id: user.id}
           expect(response).to redirect_to(user_vehicle_path(user, Vehicle.last))
@@ -84,7 +84,7 @@ RSpec.describe VehiclesController, type: :controller do
           @invalid_vehicle[:year] = "invalid"
         end
 
-        it "assigns a newly created but unsaved vehicle as @vehicle" do
+        it "assigns a newly created but unsaved user vehicle as @vehicle" do
           post :create, {vehicle: @invalid_vehicle,
                          user_id: user.id}
           expect(assigns(:vehicle)).to be_a_new(Vehicle)
@@ -107,7 +107,7 @@ RSpec.describe VehiclesController, type: :controller do
           }
         }
 
-        it "updates the requested vehicle" do
+        it "updates the requested user vehicle" do
           put :update, {id: vehicle.to_param,
                         vehicle: new_attributes,
                         user_id: user.id}
@@ -117,14 +117,14 @@ RSpec.describe VehiclesController, type: :controller do
           expect(vehicle.model).to eq("changed")
         end
 
-        it "assigns the requested vehicle as @vehicle" do
+        it "assigns the requested user vehicle as @vehicle" do
           put :update, {id: vehicle.to_param,
                         vehicle: new_attributes,
                         user_id: user.id}
           expect(assigns(:vehicle)).to eq(vehicle)
         end
 
-        it "redirects to the vehicle" do
+        it "redirects to the user vehicle" do
           put :update, {id: vehicle.to_param,
                         vehicle: new_attributes,
                         user_id: user.id}
@@ -133,7 +133,7 @@ RSpec.describe VehiclesController, type: :controller do
       end
 
       context "with invalid params" do
-        it "assigns the vehicle as @vehicle" do
+        it "assigns the user vehicle as @vehicle" do
           put :update, {id: vehicle.to_param,
                         vehicle: invalid_attributes,
                         user_id: user.id}
@@ -154,14 +154,14 @@ RSpec.describe VehiclesController, type: :controller do
         vehicle.reload
       end
 
-      it "destroys the requested vehicle" do
+      it "destroys the requested user vehicle" do
         expect {
           delete :destroy, {id: vehicle.to_param,
                             user_id: user.id}
         }.to change(Vehicle, :count).by(-1)
       end
 
-      it "redirects to the vehicles list" do
+      it "redirects to the user's vehicles list" do
         delete :destroy, {id: vehicle.to_param,
                           user_id: user.id}
         expect(response).to redirect_to(garage_url(user))
