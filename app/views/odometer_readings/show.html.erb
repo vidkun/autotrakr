@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Value:</strong>
+  <%= @odometer_reading.value %>
+</p>
+
+<p>
+  <strong>Entry date:</strong>
+  <%= @odometer_reading.entry_date %>
+</p>
+
+<p>
+  <strong>Vehicle:</strong>
+  <%= @odometer_reading.vehicle %>
+</p>
+
+<%= link_to 'Edit', edit_odometer_reading_path(@odometer_reading) %> |
+<%= link_to 'Back', odometer_readings_path %>
