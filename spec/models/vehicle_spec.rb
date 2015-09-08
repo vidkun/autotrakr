@@ -35,9 +35,9 @@ RSpec.describe Vehicle, type: :model do
     expect(vehicle.attributes).to include(:transmission)
   end
 
-  it "should have a mileage field" do
-    expect(vehicle.attributes).to include(:mileage)
-  end
+  # it "should have a mileage field" do
+  #   expect(vehicle.attributes).to include(:mileage)
+  # end
 
   it "should have a fuel field" do
     expect(vehicle.attributes).to include(:fuel)
@@ -91,12 +91,12 @@ RSpec.describe Vehicle, type: :model do
     expect(invalid_vehicle.errors[:vin]).to include("is the wrong length (should be 17 characters)")
   end
 
-  it "fails because mileage is too long" do
-    invalid_vehicle = build(:vehicle, mileage: Faker::Number.number(8).to_i)
-    expect(invalid_vehicle).to_not be_valid
-    expect(invalid_vehicle.save).to be false
-    expect(invalid_vehicle.errors[:mileage]).to include("is too long (maximum is 7 characters)")
-  end
+  # it "fails because mileage is too long" do
+  #   invalid_vehicle = build(:vehicle, mileage: Faker::Number.number(8).to_i)
+  #   expect(invalid_vehicle).to_not be_valid
+  #   expect(invalid_vehicle.save).to be false
+  #   expect(invalid_vehicle.errors[:mileage]).to include("is too long (maximum is 7 characters)")
+  # end
 
   it "fails because year is not an integer" do
     invalid_vehicle = build(:vehicle, year: Faker::Lorem.word)
@@ -105,10 +105,10 @@ RSpec.describe Vehicle, type: :model do
     expect(invalid_vehicle.errors[:year]).to include("should be a integer")
   end
 
-  it "fails because mileage is not an integer" do
-    invalid_vehicle = build(:vehicle, mileage: Faker::Lorem.word)
-    expect(invalid_vehicle).to_not be_valid
-    expect(invalid_vehicle.save).to be false
-    expect(invalid_vehicle.errors[:mileage]).to include("should be a integer")
-  end
+  # it "fails because mileage is not an integer" do
+  #   invalid_vehicle = build(:vehicle, mileage: Faker::Lorem.word)
+  #   expect(invalid_vehicle).to_not be_valid
+  #   expect(invalid_vehicle.save).to be false
+  #   expect(invalid_vehicle.errors[:mileage]).to include("should be a integer")
+  # end
 end

@@ -11,7 +11,7 @@ class Vehicle
   field :transmission, :type => String
   field :drive, :type => String
   field :fuel, :type => String
-  field :mileage, :type => Integer
+  # field :mileage, :type => Integer
   field :color, :type => String
   belongs_to :user, :index => true
 

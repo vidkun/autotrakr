@@ -9,7 +9,7 @@ FactoryGirl.define do
     transmission  { Faker::Lorem.word }
     drive         { Faker::Lorem.word }
     fuel          { Faker::Lorem.word }
-    mileage       { Faker::Number.number(6).to_i }
+    # mileage       { Faker::Number.number(6).to_i }
     color         { Faker::Commerce.color }
     association :user, :valid_password
   end
