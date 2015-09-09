@@ -2,7 +2,6 @@ class OdometerReadingsController < ApplicationController
   before_action :set_odometer_reading, only: [:show, :edit, :update, :destroy]
   before_action :set_vehicle #, except: [:show, :edit]
   before_action :set_user, only: [:create, :update, :destroy]
-  before_action :set_date, only: [:create, :update]
 
   def index
     @odometer_readings = @vehicle.odometer_readings
@@ -19,9 +18,13 @@ class OdometerReadingsController < ApplicationController
   end
 
   def create
-    odometer_attributes = odometer_reading_params.except("entry_date(1i)", "entry_date(2i)", "entry_date(3i)")
-    odometer_attributes.merge!(entry_date: @entry_date)
-    @odometer_reading = OdometerReading.new(odometer_attributes)
+    if odometer_reading_params["entry_date"]
+      @odometer_reading = OdometerReading.new(odometer_reading_params)
+    else
+      odometer_attributes = odometer_reading_params.except("entry_date(1i)", "entry_date(2i)", "entry_date(3i)")
+      odometer_attributes.merge!(entry_date: build_date)
+      @odometer_reading = OdometerReading.new(odometer_attributes)
+    end
 
     respond_to do |format|
       if @odometer_reading.save
@@ -35,8 +38,12 @@ class OdometerReadingsController < ApplicationController
   end
 
   def update
-    odometer_attributes = odometer_reading_params.except("entry_date(1i)", "entry_date(2i)", "entry_date(3i)")
-    odometer_attributes.merge!(entry_date: @entry_date)
+    if odometer_reading_params["entry_date"]
+      odometer_attributes = odometer_reading_params
+    else
+      odometer_attributes = odometer_reading_params.except("entry_date(1i)", "entry_date(2i)", "entry_date(3i)")
+      odometer_attributes.merge!(entry_date: build_date)
+    end
 
     respond_to do |format|
       if @odometer_reading.update(odometer_attributes)
@@ -70,9 +77,12 @@ class OdometerReadingsController < ApplicationController
       @vehicle = Vehicle.find(params[:vehicle_id])
     end
 
-    def set_date
-      @entry_date = Date.new odometer_reading_params["entry_date(1i)"].to_i, odometer_reading_params["entry_date(2i)"].to_i, odometer_reading_params["entry_date(3i)"].to_i
-      # params[:odometer_reading]["entry_date(1i)"]
+    def build_date
+      if odometer_reading_params.grep(/1i/).any?
+        Date.new odometer_reading_params["entry_date(1i)"].to_i, odometer_reading_params["entry_date(2i)"].to_i, odometer_reading_params["entry_date(3i)"].to_i
+      else
+        Date.new 1908, 10, 1
+      end
     end
 
     def odometer_reading_params
