@@ -8,9 +8,4 @@
   <%= @odometer_reading.entry_date %>
 </p>
 
-<p>
-  <strong>Vehicle:</strong>
-  <%= @odometer_reading.vehicle %>
-</p>
-
 <%= link_to 'Edit', edit_user_vehicle_odometer_reading_path(@vehicle.user, @vehicle, @odometer_reading) %>
