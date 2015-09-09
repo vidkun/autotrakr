@@ -69,7 +69,6 @@ class VehiclesController < ApplicationController
                                       :transmission,
                                       :drive,
                                       :fuel,
-                                      :mileage,
                                       :color,
                                       :user_id)
     end

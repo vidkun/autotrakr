@@ -1,8 +1,7 @@
 FactoryGirl.define do
   factory :odometer_reading do
-    value 1
-entry_date "2015-09-08"
-vehicle nil
+    value       { Faker::Number.number(6).to_i }
+    entry_date  { Faker::Date.backward(365) }
+    association :vehicle
   end
-
 end

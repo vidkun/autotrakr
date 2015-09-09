@@ -45,7 +45,7 @@
 
 <p>
   <strong>Mileage:</strong>
-  <%= @vehicle.mileage %>
+  <%= @vehicle.odometer_readings.last || 0 %> mi
 </p>
 
 <p>
@@ -53,5 +53,6 @@
   <%= @vehicle.color %>
 </p>
 
-<%= link_to 'Edit', edit_user_vehicle_path(@vehicle.user, @vehicle) %> |
-<%= link_to 'Back', garage_path %>
+<%= link_to "Update Odometer", new_user_vehicle_odometer_reading_path(@vehicle.user, @vehicle) %> |
+<%= link_to "Edit", edit_user_vehicle_path(@vehicle.user, @vehicle) %> |
+<%= link_to "Back", garage_path %>

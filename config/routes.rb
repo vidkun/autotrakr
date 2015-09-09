@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :odometer_readings
   resources :sessions, only: [:new, :create, :destroy]
   get "login", to: "sessions#new", as: "login"
   get "logout", to: "sessions#destroy", as: "logout"
@@ -10,7 +9,9 @@ Rails.application.routes.draw do
 
   get "/users/:user_id/garage", to: "vehicles#index", as: "garage"
   resources :users, except: [:index, :destroy] do
-    resources :vehicles, except: :index
+    resources :vehicles, except: :index do
+      resources :odometer_readings
+    end
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -1,35 +1,32 @@
 class OdometerReadingsController < ApplicationController
   before_action :set_odometer_reading, only: [:show, :edit, :update, :destroy]
+  before_action :set_vehicle #, except: [:show, :edit]
+  before_action :set_user, only: [:create, :update, :destroy]
+  before_action :set_date, only: [:create, :update]
 
-  # GET /odometer_readings
-  # GET /odometer_readings.json
   def index
-    @odometer_readings = OdometerReading.all
+    @odometer_readings = @vehicle.odometer_readings
   end
 
-  # GET /odometer_readings/1
-  # GET /odometer_readings/1.json
   def show
   end
 
-  # GET /odometer_readings/new
   def new
-    @odometer_reading = OdometerReading.new
+    @odometer_reading = OdometerReading.new(vehicle: @vehicle)
   end
 
-  # GET /odometer_readings/1/edit
   def edit
   end
 
-  # POST /odometer_readings
-  # POST /odometer_readings.json
   def create
-    @odometer_reading = OdometerReading.new(odometer_reading_params)
+    odometer_attributes = odometer_reading_params.except("entry_date(1i)", "entry_date(2i)", "entry_date(3i)")
+    odometer_attributes.merge!(entry_date: @entry_date)
+    @odometer_reading = OdometerReading.new(odometer_attributes)
 
     respond_to do |format|
       if @odometer_reading.save
-        format.html { redirect_to @odometer_reading, notice: 'Odometer reading was successfully created.' }
-        format.json { render :show, status: :created, location: @odometer_reading }
+        format.html { redirect_to [@user, @vehicle, @odometer_reading], notice: 'Odometer reading was successfully created.' }
+        format.json { render :show, status: :created, location: [@user, @vehicle, @odometer_reading] }
       else
         format.html { render :new }
         format.json { render json: @odometer_reading.errors, status: :unprocessable_entity }
@@ -37,13 +34,14 @@ class OdometerReadingsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /odometer_readings/1
-  # PATCH/PUT /odometer_readings/1.json
   def update
+    odometer_attributes = odometer_reading_params.except("entry_date(1i)", "entry_date(2i)", "entry_date(3i)")
+    odometer_attributes.merge!(entry_date: @entry_date)
+
     respond_to do |format|
-      if @odometer_reading.update(odometer_reading_params)
-        format.html { redirect_to @odometer_reading, notice: 'Odometer reading was successfully updated.' }
-        format.json { render :show, status: :ok, location: @odometer_reading }
+      if @odometer_reading.update(odometer_attributes)
+        format.html { redirect_to [@user, @vehicle, @odometer_reading], notice: 'Odometer reading was successfully updated.' }
+        format.json { render :show, status: :ok, location: [@user, @vehicle, @odometer_reading] }
       else
         format.html { render :edit }
         format.json { render json: @odometer_reading.errors, status: :unprocessable_entity }
@@ -51,24 +49,36 @@ class OdometerReadingsController < ApplicationController
     end
   end
 
-  # DELETE /odometer_readings/1
-  # DELETE /odometer_readings/1.json
   def destroy
     @odometer_reading.destroy
     respond_to do |format|
-      format.html { redirect_to odometer_readings_url, notice: 'Odometer reading was successfully destroyed.' }
+      format.html { redirect_to user_vehicle_odometer_readings_url(@user, @vehicle), notice: 'Odometer reading was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_odometer_reading
       @odometer_reading = OdometerReading.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    def set_user
+      @user = User.find(current_user.id)
+    end
+
+    def set_vehicle
+      @vehicle = Vehicle.find(params[:vehicle_id])
+    end
+
+    def set_date
+      @entry_date = Date.new odometer_reading_params["entry_date(1i)"].to_i, odometer_reading_params["entry_date(2i)"].to_i, odometer_reading_params["entry_date(3i)"].to_i
+      # params[:odometer_reading]["entry_date(1i)"]
+    end
+
     def odometer_reading_params
-      params.require(:odometer_reading).permit(:value, :entry_date, :vehicle_id)
+      params.require(:odometer_reading).permit(:value,
+                                               :entry_date,
+                                               :vehicle_id,
+                                               :user_id)
     end
 end

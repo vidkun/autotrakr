@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Value:</strong>
   <%= @odometer_reading.value %>
@@ -15,5 +13,4 @@
   <%= @odometer_reading.vehicle %>
 </p>
 
-<%= link_to 'Edit', edit_odometer_reading_path(@odometer_reading) %> |
-<%= link_to 'Back', odometer_readings_path %>
+<%= link_to 'Edit', edit_user_vehicle_odometer_reading_path(@vehicle.user, @vehicle, @odometer_reading) %>

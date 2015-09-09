@@ -29,7 +29,7 @@
         <td><%= vehicle.transmission %></td>
         <td><%= vehicle.drive %></td>
         <td><%= vehicle.fuel %></td>
-        <td><%= vehicle.mileage %></td>
+        <td><%= vehicle.odometer_readings.last || 0 %></td>
         <td><%= vehicle.color %></td>
         <td><%= link_to 'Show', [vehicle.user, vehicle] %></td>
         <td><%= link_to 'Edit', edit_user_vehicle_path(vehicle.user, vehicle) %></td>

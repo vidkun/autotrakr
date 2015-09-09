@@ -11,18 +11,15 @@ class Vehicle
   field :transmission, :type => String
   field :drive, :type => String
   field :fuel, :type => String
-  # field :mileage, :type => Integer
   field :color, :type => String
   belongs_to :user, :index => true
+  has_many :odometer_readings
 
   validates :name,
-            :vin,
             :year,
             :make,
             :model, presence: true
-  validates :year,
-            :mileage, numericality: { only_integer: true }
+  validates :year, numericality: { only_integer: true }
   validates :year, length: { maximum: 4 }
-  validates :mileage, length: { maximum: 7 }
-  validates :vin, length: { is: 17 }
+  validates :vin, length: { is: 17 }, allow_blank: true
 end
