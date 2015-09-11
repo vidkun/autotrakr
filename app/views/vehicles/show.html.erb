@@ -1,0 +1,58 @@
+<p>
+  <strong>Name:</strong>
+  <%= @vehicle.name %>
+</p>
+
+<p>
+  <strong>VIN:</strong>
+  <%= @vehicle.vin %>
+</p>
+
+<p>
+  <strong>Year:</strong>
+  <%= @vehicle.year %>
+</p>
+
+<p>
+  <strong>Make:</strong>
+  <%= @vehicle.make %>
+</p>
+
+<p>
+  <strong>Model:</strong>
+  <%= @vehicle.model %>
+</p>
+
+<p>
+  <strong>Engine:</strong>
+  <%= @vehicle.engine %>
+</p>
+
+<p>
+  <strong>Transmission:</strong>
+  <%= @vehicle.transmission %>
+</p>
+
+<p>
+  <strong>Drive:</strong>
+  <%= @vehicle.drive %>
+</p>
+
+<p>
+  <strong>Fuel:</strong>
+  <%= @vehicle.fuel %>
+</p>
+
+<p>
+  <strong>Mileage:</strong>
+  <%= @vehicle.odometer_readings.last || 0 %> mi
+</p>
+
+<p>
+  <strong>Color:</strong>
+  <%= @vehicle.color %>
+</p>
+
+<%= link_to "Update Odometer", new_user_vehicle_odometer_reading_path(@vehicle.user, @vehicle) %> |
+<%= link_to "Edit", edit_user_vehicle_path(@vehicle.user, @vehicle) %> |
+<%= link_to "Back", garage_path %>

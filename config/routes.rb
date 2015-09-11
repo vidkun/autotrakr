@@ -1,13 +1,18 @@
 Rails.application.routes.draw do
 
   resources :sessions, only: [:new, :create, :destroy]
-  get 'login', to: 'sessions#new', as: 'login'
-  get 'logout', to: 'sessions#destroy', as: 'logout'
-
-  resources :users, except: [:index, :destroy]
-  get 'signup', to: 'users#new', as: 'signup'
+  get "login", to: "sessions#new", as: "login"
+  get "logout", to: "sessions#destroy", as: "logout"
+  get "signup", to: "users#new", as: "signup"
 
   resources :password_resets, only: [:new, :create, :edit, :update]
+
+  get "/users/:user_id/garage", to: "vehicles#index", as: "garage"
+  resources :users, except: [:index, :destroy] do
+    resources :vehicles, except: :index do
+      resources :odometer_readings
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

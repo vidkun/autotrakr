@@ -1,0 +1,29 @@
+<h1>Listing Odometer Readings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Value</th>
+      <th>Entry date</th>
+      <th>Vehicle</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @odometer_readings.each do |odometer_reading| %>
+      <tr>
+        <td><%= odometer_reading.value %></td>
+        <td><%= odometer_reading.entry_date %></td>
+        <td><%= odometer_reading.vehicle %></td>
+        <td><%= link_to 'Show', odometer_reading %></td>
+        <td><%= link_to 'Edit', edit_odometer_reading_path(odometer_reading) %></td>
+        <td><%= link_to 'Destroy', odometer_reading, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Odometer reading', new_odometer_reading_path %>
